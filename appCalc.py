@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-# Кнопка %
-# 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
-=======
-<<<<<<< HEAD
-# Кнопки %
-# разобраться с гитом, сменить репозиторий
-# разобраться с пайчармом
-=======
-# Кнопка %
-# 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
->>>>>>> 6880d9e (добавила приколов в свою программу)
->>>>>>> 8deb85227a3d02c9a5b24b91ef79c14a69cf6992
-
-
 import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QPushButton, QMainWindow
 from PyQt5.QtCore import QRect, Qt
