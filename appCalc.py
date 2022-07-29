@@ -180,26 +180,27 @@ class Calculator(QWidget):
 
         #
         self.button_equal.clicked.connect(lambda: self.func_equal())
+        self.button_percent.clicked.connect(lambda: self.func_percent())
 
         # del c
         self.button_del.clicked.connect(lambda: self.func_del())
         self.button_c.clicked.connect(lambda: self.func_c())
 
     def write_number(self, number):
-        print(1)
+        # print(1)
         if (self.label.text() == '0' or self.label.text() == '0.0' or self.label.text() == 'Division by zero!' or
                 (self.save_operation != [] and self.save_operation[-1] in '/*-+') or self.save_operation == []):
-            print(2)
+            # print(2)
             self.label.setText(number)
             self.save_operation.append(number)
         else:
-            print(3)
+            # print(3)
             self.label.setText(self.label.text() + number)
             self.save_operation.append(number)
-            print(4)
+            # print(4)
             print(self.save_operation)
         if len(self.save_operation) >= 2 and self.save_operation[0] == '0' and self.save_operation[1] != '.':
-            print(5)
+            # print(5)
             del self.save_operation[0]
             print(self.save_operation)
         self.display_2(self.save_operation)
@@ -230,10 +231,6 @@ class Calculator(QWidget):
                 if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
                     del self.save_operation[-1]
             self.display_2(self.save_operation)
-
-
-
-
 
     def func_c(self):
         self.save_operation = []
@@ -271,7 +268,37 @@ class Calculator(QWidget):
 
     def func_percent(self):
         # функция процента
-        pass
+        print(1)
+        counter = 0
+        print(2)
+        percent_digit = []
+        print(3)
+        print(self.save_operation)
+        if self.save_operation != [] and self.save_operation[-1] not in '/*-+':
+            for x in reversed(self.save_operation):
+                print(4)
+                if x not in '-+*/':
+                    print(5)
+                    counter += 1
+                else:
+                    print(6)
+                    break
+                print(7)
+            percent = str(self.save_operation[-counter:])
+            print(type(percent), 'percent')
+            self.save_operation = self.save_operation[:-counter-1]
+            print(8)
+            print(self.save_operation)
+            print(9)
+            for x in reversed(self.save_operation):
+                if x not in '-+*/':
+                    percent_digit += x
+                else:
+                    break
+            percent_digit = ''.join(reversed(percent_digit))
+            self.save_operation.append(float(percent_digit))
+        
+        
 
     def func_equal(self):
         self.result = ''
