@@ -305,25 +305,26 @@ class Calculator(QWidget):
         
 
     def func_equal(self):
-        self.result = ''
-        self.result += ''.join(self.save_operation)
-        if '/0' in self.result:
-            self.label.setText('Division by zero!')
-            self.save_operation = []
-            print(self.save_operation)
-        else:  # проверка на окончание и начало со знака
-            if self.result[0] not in '-0123456789':
-                self.result = self.result[1:]
+        if self.save_operation != []:
+            self.result = ''
+            self.result += ''.join(self.save_operation)
+            if '/0' in self.result:
+                self.label.setText('Division by zero!')
+                self.save_operation = []
                 print(self.save_operation)
-            if self.result[-1] not in '0123456789':
-                self.result = self.result[:-1]
-                print(self.result)
-            self.result_it = eval(self.result)
-            self.label.setText(str(self.result_it))
-            self.display_2(list(self.result))
-            print(self.save_operation)
-            self.save_operation = []
-            print(self.save_operation)
+            else:  # проверка на окончание и начало со знака
+                if self.result[0] not in '-0123456789':
+                    self.result = self.result[1:]
+                    print(self.save_operation)
+                if self.result[-1] not in '0123456789':
+                    self.result = self.result[:-1]
+                    print(self.result)
+                self.result_it = eval(self.result)
+                self.label.setText(str(self.result_it))
+                self.display_2(list(self.result))
+                print(self.save_operation)
+                self.save_operation = []
+                print(self.save_operation)
 
 
     def display_2(self, mean):
