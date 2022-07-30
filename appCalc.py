@@ -268,35 +268,39 @@ class Calculator(QWidget):
 
     def func_percent(self):
         # функция процента
-        print(1)
         counter = 0
-        print(2)
-        percent_digit = []
-        print(3)
-        print(self.save_operation)
+        first_operand = []
         if self.save_operation != [] and self.save_operation[-1] not in '/*-+':
             for x in reversed(self.save_operation):
-                print(4)
                 if x not in '-+*/':
-                    print(5)
                     counter += 1
                 else:
-                    print(6)
                     break
-                print(7)
-            percent = str(self.save_operation[-counter:])
-            print(type(percent), 'percent')
-            self.save_operation = self.save_operation[:-counter-1]
+            percent = self.save_operation[-counter:]  # второе число 20
+            print(percent, 'percent')
+            self.save_operation = self.save_operation[:-counter]
+            oper = self.save_operation.pop(-1)
+            print(oper)
             print(8)
             print(self.save_operation)
             print(9)
             for x in reversed(self.save_operation):
                 if x not in '-+*/':
-                    percent_digit += x
+                    first_operand += x
                 else:
                     break
-            percent_digit = ''.join(reversed(percent_digit))
-            self.save_operation.append(float(percent_digit))
+            first_operand = (float(''.join(reversed(first_operand))))  # первое число лист 60
+            print(10)
+            percent_digit = ''.join(percent)
+            print('x', percent_digit)
+            print('z', first_operand)
+            itog = (float(first_operand / 100) * float(percent_digit))
+            print('qwert', itog)
+
+            print(eval(str(first_operand)+oper+str(itog)))
+            self.save_operation.append(oper)
+            self.save_operation.append(str(first_operand - eval(str(first_operand)+oper+str(itog))))
+            print(self.save_operation)
         
         
 
