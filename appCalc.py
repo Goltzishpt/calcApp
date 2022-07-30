@@ -15,7 +15,8 @@ class Calculator(QWidget):
         # главное окно
         window = QWidget(self)
         window.setGeometry(0, 0, 330, 460)
-        window.setStyleSheet("background-color: rgb(126, 227, 255); background-image: url(pngtree-beautiful-anime-scene-background-image_810743.jpg)")
+        window.setStyleSheet(
+            "background-color: rgb(126, 227, 255); background-image: url(pngtree-beautiful-anime-scene-background-image_810743.jpg)")
         self.setGeometry(200, 200, 330, 460)
 
         # вывод
@@ -38,7 +39,8 @@ class Calculator(QWidget):
         font2.setWeight(75)
         self.label_2.setFont(font2)
         self.label_2.setGeometry(QRect(0, 0, 310, 30))
-        self.label_2.setStyleSheet("background-color: rgb(223, 140, 255); color: rgb(255, 255, 255); padding: 10px 5px 0 0")
+        self.label_2.setStyleSheet(
+            "background-color: rgb(223, 140, 255); color: rgb(255, 255, 255); padding: 10px 5px 0 0")
         self.label_2.move(10, 20)
         self.label_2.setAlignment(Qt.AlignRight)
 
@@ -197,12 +199,8 @@ class Calculator(QWidget):
             # print(3)
             self.label.setText(self.label.text() + number)
             self.save_operation.append(number)
-            # print(4)
-            print(self.save_operation)
         if len(self.save_operation) >= 2 and self.save_operation[0] == '0' and self.save_operation[1] != '.':
-            # print(5)
             del self.save_operation[0]
-            print(self.save_operation)
         self.display_2(self.save_operation)
 
     def func_operation(self, operation):
@@ -213,7 +211,7 @@ class Calculator(QWidget):
             if self.save_operation[-1] in '0123456789':  # если последняя цифра - вводится операция
                 self.save_operation.append(operation)
                 print(self.save_operation)
-            else:                                        # если последний опeранд - он заменяется
+            else:  # если последний опeранд - он заменяется
                 self.save_operation[-1] = operation
                 print(self.save_operation)
         else:
@@ -254,17 +252,14 @@ class Calculator(QWidget):
             if flag == False and self.save_operation[-1] in '0123456789':
                 self.save_operation.append('.')
                 self.label.setText(self.label.text() + '.')
-                print(self.save_operation)
             elif flag == False and self.save_operation[-1] not in '0123456789':
                 self.save_operation.append('0')
                 self.save_operation.append('.')
                 self.label.setText('0.')
-                print(self.save_operation)
         else:  # ця херня работает
             self.save_operation.append('0')
             self.save_operation.append('.')
             self.label.setText('0.')
-            print(self.save_operation)
 
     def func_percent(self):
         # функция процента
@@ -277,32 +272,20 @@ class Calculator(QWidget):
                 else:
                     break
             percent = self.save_operation[-counter:]  # второе число 20
-            print(percent, 'percent')
             self.save_operation = self.save_operation[:-counter]
             oper = self.save_operation.pop(-1)
-            print(oper)
-            print(8)
-            print(self.save_operation)
-            print(9)
             for x in reversed(self.save_operation):
                 if x not in '-+*/':
                     first_operand += x
                 else:
                     break
             first_operand = (float(''.join(reversed(first_operand))))  # первое число лист 60
-            print(10)
             percent_digit = ''.join(percent)
-            print('x', percent_digit)
-            print('z', first_operand)
             itog = (float(first_operand / 100) * float(percent_digit))
-            print('qwert', itog)
-
-            print(eval(str(first_operand)+oper+str(itog)))
+            print(itog)
             self.save_operation.append(oper)
-            self.save_operation.extend(str(round(first_operand - eval(str(first_operand)+oper+str(itog)), 3)))
             print(self.save_operation)
-        
-        
+            self.save_operation.extend(str(itog))
 
     def func_equal(self):
         if self.save_operation != []:
@@ -311,21 +294,15 @@ class Calculator(QWidget):
             if '/0' in self.result:
                 self.label.setText('Division by zero!')
                 self.save_operation = []
-                print(self.save_operation)
             else:  # проверка на окончание и начало со знака
                 if self.result[0] not in '-0123456789':
                     self.result = self.result[1:]
-                    print(self.save_operation)
                 if self.result[-1] not in '0123456789':
                     self.result = self.result[:-1]
-                    print(self.result)
                 self.result_it = eval(self.result)
                 self.label.setText(str(self.result_it))
                 self.display_2(list(self.result))
-                print(self.save_operation)
                 self.save_operation = []
-                print(self.save_operation)
-
 
     def display_2(self, mean):
         display2 = ''.join(mean)
