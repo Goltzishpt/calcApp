@@ -299,7 +299,7 @@ class Calculator(QWidget):
 
             print(eval(str(first_operand)+oper+str(itog)))
             self.save_operation.append(oper)
-            self.save_operation.append(str(first_operand - eval(str(first_operand)+oper+str(itog))))
+            self.save_operation.extend(str(round(first_operand - eval(str(first_operand)+oper+str(itog)), 3)))
             print(self.save_operation)
         
         
