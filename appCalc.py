@@ -15,7 +15,7 @@ class Calculator(QWidget):
         # главное окно
         window = QWidget(self)
         window.setGeometry(0, 0, 330, 460)
-        window.setStyleSheet("background-color: rgb(126, 227, 255);")
+        window.setStyleSheet("background-color: rgb(126, 227, 255); background-image: url(pngtree-beautiful-anime-scene-background-image_810743.jpg)")
         self.setGeometry(200, 200, 330, 460)
 
         # вывод
