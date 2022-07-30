@@ -180,7 +180,7 @@ class Calculator(QWidget):
         self.button_star.clicked.connect(lambda: self.func_operation(self.button_star.text()))
         self.button_dot.clicked.connect(lambda: self.func_dot())
 
-        #
+        # функция равно и процент
         self.button_equal.clicked.connect(lambda: self.func_equal())
         self.button_percent.clicked.connect(lambda: self.func_percent())
 
@@ -281,13 +281,14 @@ class Calculator(QWidget):
             percent_digit = ''.join(percent)
             itog = (float(first_operand / 100) * float(percent_digit))
             self.save_operation.append(oper)
-            self.save_operation.extend(str(itog))
+            self.save_operation.extend(str(round(itog, 3)))
 
     def func_equal(self):
         if self.save_operation != []:
             self.result = ''
             self.result += ''.join(self.save_operation)
-            if '/0' in self.result:
+            index_zero = self.result.find('/0')
+            if self.result[index_zero+2:index_zero+3] != '.':
                 self.label.setText('Division by zero!')
                 self.save_operation = []
             else:  # проверка на окончание и начало со знака
