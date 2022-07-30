@@ -210,10 +210,8 @@ class Calculator(QWidget):
         elif len(self.save_operation) > 0:
             if self.save_operation[-1] in '0123456789':  # если последняя цифра - вводится операция
                 self.save_operation.append(operation)
-                print(self.save_operation)
             else:  # если последний опeранд - он заменяется
                 self.save_operation[-1] = operation
-                print(self.save_operation)
         else:
             self.label.setText('0')
         self.display_2(self.save_operation)
@@ -282,9 +280,7 @@ class Calculator(QWidget):
             first_operand = (float(''.join(reversed(first_operand))))  # первое число лист 60
             percent_digit = ''.join(percent)
             itog = (float(first_operand / 100) * float(percent_digit))
-            print(itog)
             self.save_operation.append(oper)
-            print(self.save_operation)
             self.save_operation.extend(str(itog))
 
     def func_equal(self):
