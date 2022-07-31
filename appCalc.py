@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QPushButton, QMainWindow
-from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtCore import QRect, Qt, QFile, QTextStream
 from PyQt5.QtGui import QFont, QIcon
 
 
@@ -15,8 +15,8 @@ class Calculator(QWidget):
         # главное окно
         window = QWidget(self)
         window.setGeometry(0, 0, 330, 460)
-        window.setStyleSheet(
-            "background-color: rgb(126, 227, 255); background-image: url(pngtree-beautiful-anime-scene-background-image_810743.jpg)")
+        window.setStyleSheet("background-color: rgb(126, 227, 255);"
+                             "background-image: url(pngtree-beautiful-anime-scene-background-image_810743.jpg)")
         self.setGeometry(200, 200, 330, 460)
 
         # вывод
@@ -288,7 +288,7 @@ class Calculator(QWidget):
             self.result = ''
             self.result += ''.join(self.save_operation)
             index_zero = self.result.find('/0')
-            if self.result[index_zero+2:index_zero+3] != '.':
+            if '/0' in self.result and self.result[index_zero+1:index_zero+3] != '0.':
                 self.label.setText('Division by zero!')
                 self.save_operation = []
             else:  # проверка на окончание и начало со знака
