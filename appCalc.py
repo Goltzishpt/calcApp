@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QPushButton, QMainWindow
-from PyQt5.QtCore import QRect, Qt, QFile, QTextStream
+from PyQt5.QtCore import QRect, Qt
 from PyQt5.QtGui import QFont, QIcon
 
 
