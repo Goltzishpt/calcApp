@@ -2,11 +2,15 @@ import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QPushButton, QMainWindow
 from PyQt5.QtCore import QRect, Qt
 from PyQt5.QtGui import QFont, QIcon
+from writeNumber import buttonHandler as bh
 
 
-class Calculator(QWidget):
+bh = bh()
+
+
+class UI(QWidget):
     def __init__(self):
-        super(Calculator, self).__init__()
+        super(UI, self).__init__()
         self.unitUI()
         self.save_operation = []
 
@@ -162,144 +166,31 @@ class Calculator(QWidget):
 
     def functions(self):
         # кнопки цифры
-        self.button_1.clicked.connect(lambda: self.write_number(self.button_1.text()))
-        self.button_2.clicked.connect(lambda: self.write_number(self.button_2.text()))
-        self.button_3.clicked.connect(lambda: self.write_number(self.button_3.text()))
-        self.button_4.clicked.connect(lambda: self.write_number(self.button_4.text()))
-        self.button_5.clicked.connect(lambda: self.write_number(self.button_5.text()))
-        self.button_6.clicked.connect(lambda: self.write_number(self.button_6.text()))
-        self.button_7.clicked.connect(lambda: self.write_number(self.button_7.text()))
-        self.button_8.clicked.connect(lambda: self.write_number(self.button_8.text()))
-        self.button_9.clicked.connect(lambda: self.write_number(self.button_9.text()))
-        self.button_0.clicked.connect(lambda: self.write_number(self.button_0.text()))
+        self.button_1.clicked.connect(lambda: bh.write_number(self.button_1.text(), self.label, self.display_2, self.save_operation))
+        self.button_2.clicked.connect(lambda: bh.write_number(self.button_2.text(), self.label, self.display_2, self.save_operation))
+        self.button_3.clicked.connect(lambda: bh.write_number(self.button_3.text(), self.label, self.display_2, self.save_operation))
+        self.button_4.clicked.connect(lambda: bh.write_number(self.button_4.text(), self.label, self.display_2, self.save_operation))
+        self.button_5.clicked.connect(lambda: bh.write_number(self.button_5.text(), self.label, self.display_2, self.save_operation))
+        self.button_6.clicked.connect(lambda: bh.write_number(self.button_6.text(), self.label, self.display_2, self.save_operation))
+        self.button_7.clicked.connect(lambda: bh.write_number(self.button_7.text(), self.label, self.display_2, self.save_operation))
+        self.button_8.clicked.connect(lambda: bh.write_number(self.button_8.text(), self.label, self.display_2, self.save_operation))
+        self.button_9.clicked.connect(lambda: bh.write_number(self.button_9.text(), self.label, self.display_2, self.save_operation))
+        self.button_0.clicked.connect(lambda: bh.write_number(self.button_0.text(), self.label, self.display_2, self.save_operation))
 
         # кнопки операторы
-        self.button_plus.clicked.connect(lambda: self.func_operation(self.button_plus.text()))
-        self.button_minus.clicked.connect(lambda: self.func_operation(self.button_minus.text()))
-        self.button_div.clicked.connect(lambda: self.func_operation(self.button_div.text()))
-        self.button_star.clicked.connect(lambda: self.func_operation(self.button_star.text()))
-        self.button_dot.clicked.connect(lambda: self.func_dot())
+        self.button_plus.clicked.connect(lambda: bh.func_operation(self.button_plus.text(), self.label, self.display_2, self.save_operation))
+        self.button_minus.clicked.connect(lambda: bh.func_operation(self.button_minus.text(), self.label, self.display_2, self.save_operation))
+        self.button_div.clicked.connect(lambda: bh.func_operation(self.button_div.text(), self.label, self.display_2, self.save_operation))
+        self.button_star.clicked.connect(lambda: bh.func_operation(self.button_star.text(), self.label, self.display_2, self.save_operation))
+        self.button_dot.clicked.connect(lambda: bh.func_dot(self.label, self.save_operation))
 
         # функция равно и процент
-        self.button_equal.clicked.connect(lambda: self.func_equal())
-        self.button_percent.clicked.connect(lambda: self.func_percent())
+        self.button_equal.clicked.connect(lambda: bh.func_equal(self.label, self.display_2, self.save_operation))
+        self.button_percent.clicked.connect(lambda: bh.func_percent(self.save_operation))
 
         # del c
-        self.button_del.clicked.connect(lambda: self.func_del())
-        self.button_c.clicked.connect(lambda: self.func_c())
-
-    def write_number(self, number):
-        # print(1)
-        if (self.label.text() == '0' or self.label.text() == '0.0' or self.label.text() == 'Division by zero!' or
-                (self.save_operation != [] and self.save_operation[-1] in '/*-+') or self.save_operation == []):
-            # print(2)
-            self.label.setText(number)
-            self.save_operation.append(number)
-        else:
-            # print(3)
-            self.label.setText(self.label.text() + number)
-            self.save_operation.append(number)
-        if len(self.save_operation) >= 2 and self.save_operation[0] == '0' and self.save_operation[1] != '.':
-            del self.save_operation[0]
-        self.display_2(self.save_operation)
-
-    def func_operation(self, operation):
-        if len(self.save_operation) == 0 and operation == '-':
-            self.save_operation.append(operation)
-            self.label.setText(operation)
-        elif len(self.save_operation) > 0:
-            if self.save_operation[-1] in '0123456789':  # если последняя цифра - вводится операция
-                self.save_operation.append(operation)
-            else:  # если последний опeранд - он заменяется
-                self.save_operation[-1] = operation
-        else:
-            self.label.setText('0')
-        self.display_2(self.save_operation)
-
-    def func_del(self):
-        if self.label.text() != '0':
-            if len(self.label.text()) > 1:
-                self.label.setText(self.label.text()[:-1])
-                if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
-                    del self.save_operation[-1]
-            else:
-                self.label.setText('0')
-                if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
-                    del self.save_operation[-1]
-            self.display_2(self.save_operation)
-
-    def func_c(self):
-        self.save_operation = []
-        self.label.setText('0')
-        self.display_2(['0'])
-
-    def func_dot(self):  # ця хуйня вроде работает
-        flag = False
-        if len(self.save_operation) > 0:
-            # -------------------------------------------
-            for x in reversed(self.save_operation):
-                if x not in '/*-+':
-                    if x == '.':
-                        flag = True
-                        break
-                    else:
-                        continue
-                else:
-                    break
-            # --------------------------------------------
-            if flag == False and self.save_operation[-1] in '0123456789':
-                self.save_operation.append('.')
-                self.label.setText(self.label.text() + '.')
-            elif flag == False and self.save_operation[-1] not in '0123456789':
-                self.save_operation.append('0')
-                self.save_operation.append('.')
-                self.label.setText('0.')
-        else:  # ця херня работает
-            self.save_operation.append('0')
-            self.save_operation.append('.')
-            self.label.setText('0.')
-
-    def func_percent(self):
-        # функция процента
-        counter = 0
-        first_operand = []
-        if self.save_operation != [] and self.save_operation[-1] not in '/*-+':
-            for x in reversed(self.save_operation):
-                if x not in '-+*/':
-                    counter += 1
-                else:
-                    break
-            percent = self.save_operation[-counter:]  # второе число 20
-            self.save_operation = self.save_operation[:-counter]
-            oper = self.save_operation.pop(-1)
-            for x in reversed(self.save_operation):
-                if x not in '-+*/':
-                    first_operand += x
-                else:
-                    break
-            first_operand = (float(''.join(reversed(first_operand))))  # первое число лист 60
-            percent_digit = ''.join(percent)
-            itog = (float(first_operand / 100) * float(percent_digit))
-            self.save_operation.append(oper)
-            self.save_operation.extend(str(round(itog, 3)))
-
-    def func_equal(self):
-        if self.save_operation != []:
-            self.result = ''
-            self.result += ''.join(self.save_operation)
-            index_zero = self.result.find('/0')
-            if '/0' in self.result and self.result[index_zero+1:index_zero+3] != '0.':
-                self.label.setText('Division by zero!')
-                self.save_operation = []
-            else:  # проверка на окончание и начало со знака
-                if self.result[0] not in '-0123456789':
-                    self.result = self.result[1:]
-                if self.result[-1] not in '0123456789':
-                    self.result = self.result[:-1]
-                self.result_it = eval(self.result)
-                self.label.setText(str(self.result_it))
-                self.display_2(list(self.result))
-                self.save_operation = []
+        self.button_del.clicked.connect(lambda: bh.func_del(self.label, self.display_2, self.save_operation))
+        self.button_c.clicked.connect(lambda: bh.func_c(self.label, self.display_2, self.save_operation))
 
     def display_2(self, mean):
         display2 = ''.join(mean)
@@ -310,7 +201,7 @@ class Calculator(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    appCalc = Calculator()
+    appCalc = UI()
     appCalc.setWindowTitle('Calculator')
     app.setWindowIcon(QIcon('imgCalc.png'))
     MainWindow = QMainWindow()
