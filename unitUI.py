@@ -15,6 +15,7 @@ class UI(QWidget):
         self.save_operation = []
 
     def unitUI(self):
+
         # отрисовка программы
         # главное окно
         window = QWidget(self)
@@ -165,6 +166,7 @@ class UI(QWidget):
         self.show()
 
     def functions(self):
+
         # кнопки цифры
         self.button_1.clicked.connect(lambda: bh.write_number(self.button_1.text(), self.label, self.display_2, self.save_operation))
         self.button_2.clicked.connect(lambda: bh.write_number(self.button_2.text(), self.label, self.display_2, self.save_operation))
@@ -186,7 +188,7 @@ class UI(QWidget):
 
         # функция равно и процент
         self.button_equal.clicked.connect(lambda: bh.func_equal(self.label, self.display_2, self.save_operation))
-        self.button_percent.clicked.connect(lambda: bh.func_percent(self.save_operation))
+        self.button_percent.clicked.connect(lambda: bh.func_percent(self.label, self.display_2, self.save_operation))
 
         # del c
         self.button_del.clicked.connect(lambda: bh.func_del(self.label, self.display_2, self.save_operation))

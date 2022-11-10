@@ -1,6 +1,6 @@
 class buttonHandler():
-
     def write_number(self, number, label, display_2, save_operation):
+        print(0, save_operation)
         if (label.text() == '0' or label.text() == '0.0' or label.text() == 'Division by zero!' or
                 (save_operation != [] and save_operation[-1] in '/*-+') or save_operation == []):
             label.setText(number)
@@ -13,6 +13,7 @@ class buttonHandler():
         display_2(save_operation)
 
     def func_operation(self, operation, label, display_2, save_operation):
+        print('?', save_operation)
         if len(save_operation) == 0 and operation == '-':
             save_operation.append(operation)
             label.setText(operation)
@@ -36,6 +37,8 @@ class buttonHandler():
                 if len(save_operation) != 0 and save_operation[-1] not in '*-+/':
                     del save_operation[-1]
             display_2(save_operation)
+            print(save_operation)
+
 
     def func_c(self, label, display_2, save_operation):
         save_operation.clear()
@@ -68,7 +71,7 @@ class buttonHandler():
             save_operation.append('.')
             label.setText('0.')
 
-    def func_percent(self, save_operation):
+    def func_percent(self, label, display_2, save_operation):
         # функция процента
         counter = 0
         first_operand = []
@@ -79,7 +82,10 @@ class buttonHandler():
                 else:
                     break
             percent = save_operation[-counter:]  # второе число 20
-            save_operation = save_operation[:-counter]
+            print(save_operation)
+            for i in range(counter):
+                del save_operation[-1]
+            print(save_operation, counter)
             oper = save_operation.pop(-1)
             for x in reversed(save_operation):
                 if x not in '-+*/':
@@ -91,6 +97,8 @@ class buttonHandler():
             itog = (float(first_operand / 100) * float(percent_digit))
             save_operation.append(oper)
             save_operation.extend(str(round(itog, 3)))
+            label.setText(str(round(itog, 3)))
+            display_2(save_operation)
 
     def func_equal(self, label, display_2, save_operation):
         if save_operation != []:
